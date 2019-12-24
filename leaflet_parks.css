@@ -8,8 +8,8 @@ html, body {
   margin: 0;
 }
 #map {
-  width: 600px;
-  height: 400px;
+  width: 800px;
+  height: 500px;
 }
 
 .info { 

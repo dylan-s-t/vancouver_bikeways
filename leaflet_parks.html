@@ -41,26 +41,13 @@
       }).addTo(map); */
 
       // control that shows state info on hover
-      var info = L.control();
-      
-      info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return this._div;
-      };
-
-      info.update = function (props) {
-        this._div.innerHTML = '<h4>Park Info </h4>' +  (props ?
-          '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
-          : 'Hover over a park');
-      };
 
       function getBikeLineWeight(l) {
         let bwlw;
         l == "Local Street" ? bwlw = 1 :
         l == "Painted Lanes" ? bwlw = 2 : 
           bwlw = 3; 
-        console.log(bwlw);
+        //console.log(bwlw);
         return bwlw;
       }
 
@@ -119,6 +106,11 @@
         info.update();
       }
 
+      function resetHighlight_bikeway(e) {
+        bikeways.resetStyle(e.target);
+        info.update();
+      }
+
       function zoomToFeature(e) {
         map.fitBounds(e.target.getBounds());
       }
@@ -133,6 +125,8 @@
 
       function onEachFeature_bikeways(feature, layer) {
         layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight_bikeway,
           click: zoomToFeature
         });
       }
@@ -148,7 +142,7 @@
       });
 
       var map = L.map('map', {
-        center: [49.264459, -123.173761],
+        center: [49.247232, -123.127741], 
         zoom: 12,
         layers: [grayscale, parks, bikeways]
       });
@@ -185,9 +179,38 @@
       var overlays = {
         "Parks": parks,
         "Bikeways": bikeways
-      }
+      } 
+      var layers = L.control.layers(baseLayers, overlays, {position: 'bottomleft'})
+      layers.addTo(map);
 
-      L.control.layers(baseLayers, overlays).addTo(map);
+      var info = L.control();
+      
+      info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+      };
+
+      /* info.update = function (props) {
+        this._div.innerHTML = '<h4>Feature Info </h4>' +  (props ?
+          '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
+          : 'Hover over a park');
+      }; */
+
+      info.update = function (props) {
+        if (props) {
+          if (props.park_name) {
+          this._div.innerHTML = '<h4>Feature Info </h4>' + 
+          '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
+          } else if (props.bikeway_type) {
+            this._div.innerHTML = '<h4>Feature Info </h4>' + 
+            '<b>' + props.bike_route_name + '</b><br />' + 'Bikeway Type: '+ props.bikeway_type
+          }
+        } else {
+          this._div.innerHTML = '<h4>Feature Info </h4>' + 'Hover over a feature';
+        }
+      };
+
       info.addTo(map);
   
     </script>
