@@ -5,7 +5,9 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-    <script src = "parks-polygon-representation.js"></script>
+    
+    <script src = "parks_poly_washrooms_Feature.js"></script>
+    <script src = "drinking-fountains.js"></script>
     <script src = "bikeways.js"></script>
     <link rel="stylesheet" href=leaflet_parks.css>
   </head>
@@ -51,7 +53,7 @@
         return bwlw;
       }
 
-      function getColor(d) {
+      /* function getColor(d) {
         return d > 100 ? '#800026' :
             d > 50 ? '#BD0026' :
             d > 35 ? '#E31A1C' :
@@ -60,6 +62,18 @@
             d > 5   ? '#FEB24C' :
             d > 2   ? '#FED976' :
                   '#FFEDA0';
+      } */
+      const has_washroom_park_color = 'springgreen';
+      const no_washroom_park_color = 'palegreen';
+
+      function getColor_park(d) {
+        return d == null ? no_washroom_park_color :
+                  has_washroom_park_color;
+      } 
+
+      function getColor_fountain(w) {
+        return w == "Year Round" || w == "year-round" ? 'blue' : 
+          'lightblue'
       }
 
       // styles for layers
@@ -70,7 +84,7 @@
           color: 'white',
           //dashArray: '3',
           fillOpacity: 0.7,
-          fillColor: getColor(feature.properties.area_ha)
+          fillColor: getColor_park(feature.properties.parks_washrooms_table_OBJECTID)
         };
       }
 
@@ -92,14 +106,22 @@
           fillOpacity: 0.7
         });
 
-        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        /* if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
           layer.bringToFront();
-        }
+        } */
 
         info.update(layer.feature.properties);
       }
 
-      var parks;
+      function highlightFeature_fountain(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+          color: 'white'
+        })
+      }
+
+      //var parks;
 
       function resetHighlight(e) {
         parks.resetStyle(e.target);
@@ -108,6 +130,11 @@
 
       function resetHighlight_bikeway(e) {
         bikeways.resetStyle(e.target);
+        info.update();
+      }
+
+      function resetHighlight_fountain(e) {
+        fountains.resetStyle(e.target);
         info.update();
       }
 
@@ -131,7 +158,15 @@
         });
       }
 
-      parks = L.geoJson(parks, {
+      function onEachFeature_fountains(feature, layer) {
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight_fountain,
+          click: zoomToFeature
+        })
+      }
+
+      parks = L.geoJson(parks_wr, {
         style: style,
         onEachFeature: onEachFeature
       });
@@ -141,15 +176,30 @@
         onEachFeature: onEachFeature_bikeways
       });
 
+      fountains = L.geoJson(fountains, {
+        pointToLayer: function (feature, latlng) {
+          console.log(feature.properties.in_operation)
+          return L.circleMarker(latlng, {
+            radius: 4,
+            fillColor: getColor_fountain(feature.properties.in_operation),
+            color: "navy",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          })
+        },
+        onEachFeature: onEachFeature_fountains
+      });
+
       var map = L.map('map', {
         center: [49.247232, -123.127741], 
         zoom: 12,
-        layers: [grayscale, parks, bikeways]
+        layers: [grayscale, parks, bikeways, fountains]
       });
 
       var legend = L.control({position: 'bottomright'});
 
-      legend.onAdd = function (map) {
+/*       legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
           grades = [0, 2, 5, 10, 20, 35, 50, 100],
@@ -161,9 +211,25 @@
           to = grades[i + 1];
 
           labels.push(
-            '<i style="background:' + getColor(from + 1) + '"></i> ' +
+            '<i style="background:' + getColor_park(from + 1) + '"></i> ' +
             from + (to ? '&ndash;' + to : '+'));
         }
+
+        div.innerHTML = labels.join('<br>');
+        return div;
+      }; */
+
+      legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend'),
+          labels = []
+
+        labels.push(
+          '<i style="background:' + no_washroom_park_color + '""></i> ' + 'no washrooom');
+        labels.push(
+          '<i style="background:' + has_washroom_park_color + '""></i> ' + 'has washrooom');
+        
+        
 
         div.innerHTML = labels.join('<br>');
         return div;
@@ -178,8 +244,10 @@
 
       var overlays = {
         "Parks": parks,
-        "Bikeways": bikeways
+        "Bikeways": bikeways,
+        "Water Fountains": fountains
       } 
+
       var layers = L.control.layers(baseLayers, overlays, {position: 'bottomleft'})
       layers.addTo(map);
 
