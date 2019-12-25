@@ -113,14 +113,6 @@
         info.update(layer.feature.properties);
       }
 
-      function highlightFeature_fountain(e) {
-        var layer = e.target;
-
-        layer.setStyle({
-          color: 'white'
-        })
-      }
-
       //var parks;
 
       function resetHighlight(e) {
@@ -268,11 +260,15 @@
       info.update = function (props) {
         if (props) {
           if (props.park_name) {
-          this._div.innerHTML = '<h4>Feature Info </h4>' + 
-          '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
+          this._div.innerHTML = '<h4>Feature Info</h4>' + 
+          '<b>' + props.park_name + '</b><br />' + 'Area: '+ props.area_ha.toFixed(0) + ' hectares'
           } else if (props.bikeway_type) {
-            this._div.innerHTML = '<h4>Feature Info </h4>' + 
+            this._div.innerHTML = '<h4>Feature Info</h4>' + 
             '<b>' + props.bike_route_name + '</b><br />' + 'Bikeway Type: '+ props.bikeway_type
+          } else if (props.name) {
+            this._div.innerHTML = '<h4>Feature Info</h4>' + props.name + '<br/>' +
+            'In operation: ' + props.in_operation
+
           }
         } else {
           this._div.innerHTML = '<h4>Feature Info </h4>' + 'Hover over a feature';

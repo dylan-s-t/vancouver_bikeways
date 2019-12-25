@@ -1127,7 +1127,7 @@ fountains = {
         "photo_name": "GranvilleIslandPumpingStation.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Fairview",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -1187,7 +1187,7 @@ fountains = {
         "photo_name": "Davie&Burrard.jpg",
         "pet_friendly": "N",
         "geo_local_area": "West End",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -1207,7 +1207,7 @@ fountains = {
         "photo_name": "Comox&Cardero.jpg",
         "pet_friendly": "N",
         "geo_local_area": "West End",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -1247,7 +1247,7 @@ fountains = {
         "photo_name": "Granville&59th.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Marpole",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -1326,7 +1326,7 @@ fountains = {
         "location": "1200 Davie Street",
         "pet_friendly": "Y",
         "geo_local_area": "West End",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -1345,7 +1345,7 @@ fountains = {
         "location": "Southeast corner of Ormidale St & Vanness Avenue",
         "pet_friendly": "N",
         "geo_local_area": "Renfrew-Collingwood",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2631,7 +2631,7 @@ fountains = {
         "photo_name": "GranvilleStPumpingStation.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Downtown",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2651,7 +2651,7 @@ fountains = {
         "photo_name": "KitsilanoPumpingStation.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Kitsilano",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2671,7 +2671,7 @@ fountains = {
         "photo_name": "ThorntonParkPumpingStation.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Strathcona",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2831,7 +2831,7 @@ fountains = {
         "photo_name": "Hastings&Gore.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Strathcona",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2871,7 +2871,7 @@ fountains = {
         "photo_name": "Union&Hawks.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Strathcona",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2909,7 +2909,7 @@ fountains = {
         "location": "1600 Waterloo St",
         "pet_friendly": "N",
         "geo_local_area": "Kitsilano",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -2928,7 +2928,7 @@ fountains = {
         "location": "Southeast corner of W 63rd Avenue & Yukon Street",
         "pet_friendly": "N",
         "geo_local_area": "Marpole",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -3975,7 +3975,7 @@ fountains = {
         "photo_name": "CharlesonParkPumpingStation.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Fairview",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -3994,7 +3994,7 @@ fountains = {
         "maintainer": "Engineering",
         "pet_friendly": "N",
         "geo_local_area": "Renfrew-Collingwood",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4154,7 +4154,7 @@ fountains = {
         "photo_name": "Comox&Denman.jpg",
         "pet_friendly": "N",
         "geo_local_area": "West End",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4234,7 +4234,7 @@ fountains = {
         "photo_name": "Granville Robson 2.JPG",
         "pet_friendly": "N",
         "geo_local_area": "Downtown",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4254,7 +4254,7 @@ fountains = {
         "photo_name": "Main&11th.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Mount Pleasant",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4293,7 +4293,7 @@ fountains = {
         "location": "Northeast corner of Cambie & 10th",
         "pet_friendly": "N",
         "geo_local_area": "Mount Pleasant",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4312,7 +4312,7 @@ fountains = {
         "location": "Southwest corner of Cambie & 29th Avenue",
         "pet_friendly": "N",
         "geo_local_area": "South Cambie",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4332,7 +4332,7 @@ fountains = {
         "photo_name": "Oak&46th.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Oakridge",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4370,7 +4370,7 @@ fountains = {
         "location": "Southeast corner of Nelson & Howe",
         "pet_friendly": "N",
         "geo_local_area": "Downtown",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4390,7 +4390,7 @@ fountains = {
         "photo_name": "Pt. Grey&MacDonald.jpg",
         "pet_friendly": "N",
         "geo_local_area": "Kitsilano",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     },
     {
@@ -4409,7 +4409,7 @@ fountains = {
         "location": "Northwest corner of Fraser & Broadway",
         "pet_friendly": "N",
         "geo_local_area": "Mount Pleasant",
-        "in_operation": "Year Round"
+        "in_operation": "year-round"
       }
     }
   ]
