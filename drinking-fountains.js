@@ -1,4 +1,4 @@
-fountains = {
+var fountains = {
   "type": "FeatureCollection",
   "features": [
     {

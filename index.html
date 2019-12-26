@@ -1,283 +1,345 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-    
-    <script src = "parks_poly_washrooms_Feature.js"></script>
-    <script src = "drinking-fountains.js"></script>
-    <script src = "bikeways.js"></script>
-    <link rel="stylesheet" href=leaflet_parks.css>
-  </head>
-  <body>
-    <div id="map"></div>
 
-    <script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
+    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+  <script src="parks_poly_washrooms_Feature.js"></script>
+  <script src="drinking-fountains.js"></script>
+  <script src="bikeways.js"></script>
+  <script src="parks_point_Statistics3.js"></script>
+  <link rel="stylesheet" href=leaflet_parks.css>
+</head>
 
-      var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>, ' +
-          'Data <a href="https://opendata.vancouver.ca/pages/home/">City of Vancouver Open Data Portal</a>',
-          mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-        
-      var grayscale = L.tileLayer(
+<body>
+  <div id="map"></div>
+
+  <script>
+
+    var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>, ' +
+      'Data <a href="https://opendata.vancouver.ca/pages/home/">City of Vancouver Open Data Portal</a>',
+      mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+
+    var grayscale = L.tileLayer(
+      mbUrl, {
+      id: 'mapbox/light-v9',
+      attribution: mbAttr
+    }),
+      streets = L.tileLayer(
         mbUrl, {
-            id: 'mapbox/light-v9',
-            attribution: mbAttr
-          }),
-        streets  = L.tileLayer(
-          mbUrl, {
-            id: 'mapbox/streets-v11',   
-            attribution: mbAttr
-          });
+        id: 'mapbox/streets-v11',
+        attribution: mbAttr
+      });
 
 
 
-/*       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox/light-v9'
-      }).addTo(map); */
+    /*       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+              '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+              'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox/light-v9'
+          }).addTo(map); */
 
-      // control that shows state info on hover
+    // control that shows state info on hover
 
-      function getBikeLineWeight(l) {
-        let bwlw;
-        l == "Local Street" ? bwlw = 1 :
-        l == "Painted Lanes" ? bwlw = 2 : 
-          bwlw = 3; 
-        //console.log(bwlw);
-        return bwlw;
-      }
+    function getBikeLineWeight(l) {
+      let bwlw;
+      l == "Local Street" ? bwlw = 1 :
+        l == "Painted Lanes" ? bwlw = 2 :
+          bwlw = 3;
+      //console.log(bwlw);
+      return bwlw;
+    }
 
-      /* function getColor(d) {
-        return d > 100 ? '#800026' :
-            d > 50 ? '#BD0026' :
-            d > 35 ? '#E31A1C' :
-            d > 20 ? '#FC4E2A' :
-            d > 10   ? '#FD8D3C' :
-            d > 5   ? '#FEB24C' :
-            d > 2   ? '#FED976' :
-                  '#FFEDA0';
+    /* function getColor(d) {
+      return d > 100 ? '#800026' :
+          d > 50 ? '#BD0026' :
+          d > 35 ? '#E31A1C' :
+          d > 20 ? '#FC4E2A' :
+          d > 10   ? '#FD8D3C' :
+          d > 5   ? '#FEB24C' :
+          d > 2   ? '#FED976' :
+                '#FFEDA0';
+    } */
+    const has_washroom_park_color = 'springgreen';
+    const no_washroom_park_color = 'palegreen';
+
+    function getColor_park(d) {
+      return d == null ? no_washroom_park_color :
+        has_washroom_park_color;
+    }
+
+    function getColor_fountain(w) {
+      return w == "Year Round" || w == "year-round" ? 'blue' :
+        'lightblue'
+    }
+
+    // styles for layers
+    function style(feature) {
+      return {
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        //dashArray: '3',
+        fillOpacity: 0.7,
+        fillColor: getColor_park(feature.properties.parks_washrooms_table_OBJECTID)
+      };
+    }
+
+    function style_bikeways(feature) {
+      return {
+        weight: getBikeLineWeight(feature.properties.bikeway_type),
+        opacity: 1,
+        color: 'green'
+      };
+    }
+
+    function highlightFeature(e) {
+      var layer = e.target;
+
+      layer.setStyle({
+        weight: 5,
+        color: 'coral',
+        dashArray: '',
+        fillOpacity: 0.7
+      });
+
+      /* if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
       } */
-      const has_washroom_park_color = 'springgreen';
-      const no_washroom_park_color = 'palegreen';
 
-      function getColor_park(d) {
-        return d == null ? no_washroom_park_color :
-                  has_washroom_park_color;
-      } 
+      info.update(layer.feature.properties);
+    }
 
-      function getColor_fountain(w) {
-        return w == "Year Round" || w == "year-round" ? 'blue' : 
-          'lightblue'
-      }
+    //var parks;
 
-      // styles for layers
-      function style(feature) {
-        return {
+    function resetHighlight(e) {
+      parks.resetStyle(e.target);
+      info.update();
+    }
+
+    function resetHighlight_bikeway(e) {
+      bikeways.resetStyle(e.target);
+      info.update();
+    }
+
+    function resetHighlight_fountain(e) {
+      fountains.resetStyle(e.target);
+      info.update();
+    }
+
+    function zoomToFeature(e) {
+      map.fitBounds(e.target.getBounds());
+    }
+
+    function onEachFeature(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+      });
+    }
+
+    function onEachFeature_bikeways(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight_bikeway,
+        click: zoomToFeature
+      });
+    }
+
+    function onEachFeature_fountains(feature, layer) {
+      layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight_fountain,
+        click: zoomToFeature
+      })
+    }
+
+    parks = L.geoJson(parks_wr, {
+      style: style,
+      onEachFeature: onEachFeature
+    });
+
+    bikeways = L.geoJson(bikeways_js, {
+      style: style_bikeways,
+      onEachFeature: onEachFeature_bikeways
+    });
+
+    fountains = L.geoJson(fountains, {
+      pointToLayer: function (feature, latlng) {
+        //console.log(feature.properties.in_operation)
+        return L.circleMarker(latlng, {
+          radius: 4,
+          fillColor: getColor_fountain(feature.properties.in_operation),
+          color: "navy",
           weight: 1,
           opacity: 1,
-          color: 'white',
-          //dashArray: '3',
-          fillOpacity: 0.7,
-          fillColor: getColor_park(feature.properties.parks_washrooms_table_OBJECTID)
-        };
-      }
-
-      function style_bikeways(feature) {
-        return {
-          weight: getBikeLineWeight(feature.properties.bikeway_type),
-          opacity: 1,
-          color: 'green'
-        };
-      }
-
-      function highlightFeature(e) {
-        var layer = e.target;
-
-        layer.setStyle({
-          weight: 5,
-          color: 'coral',
-          dashArray: '',
-          fillOpacity: 0.7
-        });
-
-        /* if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-          layer.bringToFront();
-        } */
-
-        info.update(layer.feature.properties);
-      }
-
-      //var parks;
-
-      function resetHighlight(e) {
-        parks.resetStyle(e.target);
-        info.update();
-      }
-
-      function resetHighlight_bikeway(e) {
-        bikeways.resetStyle(e.target);
-        info.update();
-      }
-
-      function resetHighlight_fountain(e) {
-        fountains.resetStyle(e.target);
-        info.update();
-      }
-
-      function zoomToFeature(e) {
-        map.fitBounds(e.target.getBounds());
-      }
-
-      function onEachFeature(feature, layer) {
-        layer.on({
-          mouseover: highlightFeature,
-          mouseout: resetHighlight,
-          click: zoomToFeature
-        });
-      }
-
-      function onEachFeature_bikeways(feature, layer) {
-        layer.on({
-          mouseover: highlightFeature,
-          mouseout: resetHighlight_bikeway,
-          click: zoomToFeature
-        });
-      }
-
-      function onEachFeature_fountains(feature, layer) {
-        layer.on({
-          mouseover: highlightFeature,
-          mouseout: resetHighlight_fountain,
-          click: zoomToFeature
+          fillOpacity: 0.8
         })
-      }
+      },
+      onEachFeature: onEachFeature_fountains
+    });
 
-      parks = L.geoJson(parks_wr, {
-        style: style,
-        onEachFeature: onEachFeature
-      });
+    var map = L.map('map', {
+      center: [49.247232, -123.127741],
+      zoom: 12,
+      layers: [grayscale, parks, bikeways, fountains]
+    });
 
-      bikeways = L.geoJson(bikeways_js, {
-        style: style_bikeways,
-        onEachFeature: onEachFeature_bikeways
-      });
+    var legend = L.control({ position: 'bottomright' });
 
-      fountains = L.geoJson(fountains, {
-        pointToLayer: function (feature, latlng) {
-          //console.log(feature.properties.in_operation)
-          return L.circleMarker(latlng, {
-            radius: 4,
-            fillColor: getColor_fountain(feature.properties.in_operation),
-            color: "navy",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          })
-        },
-        onEachFeature: onEachFeature_fountains
-      });
+    /*       legend.onAdd = function (map) {
+    
+            var div = L.DomUtil.create('div', 'info legend'),
+              grades = [0, 2, 5, 10, 20, 35, 50, 100],
+              labels = [],
+              from, to;
+    
+            for (var i = 0; i < grades.length; i++) {
+              from = grades[i];
+              to = grades[i + 1];
+    
+              labels.push(
+                '<i style="background:' + getColor_park(from + 1) + '"></i> ' +
+                from + (to ? '&ndash;' + to : '+'));
+            }
+    
+            div.innerHTML = labels.join('<br>');
+            return div;
+          }; */
 
-      var map = L.map('map', {
-        center: [49.247232, -123.127741], 
-        zoom: 12,
-        layers: [grayscale, parks, bikeways, fountains]
-      });
+    legend.onAdd = function (map) {
 
-      var legend = L.control({position: 'bottomright'});
+      var div = L.DomUtil.create('div', 'info legend'),
+        labels = []
 
-/*       legend.onAdd = function (map) {
+      labels.push(
+        '<i style="background:' + no_washroom_park_color + '""></i> ' + 'no washrooom');
+      labels.push(
+        '<i style="background:' + has_washroom_park_color + '""></i> ' + 'has washrooom');
 
-        var div = L.DomUtil.create('div', 'info legend'),
-          grades = [0, 2, 5, 10, 20, 35, 50, 100],
-          labels = [],
-          from, to;
 
-        for (var i = 0; i < grades.length; i++) {
-          from = grades[i];
-          to = grades[i + 1];
 
-          labels.push(
-            '<i style="background:' + getColor_park(from + 1) + '"></i> ' +
-            from + (to ? '&ndash;' + to : '+'));
-        }
+      div.innerHTML = labels.join('<br>');
+      return div;
+    };
 
-        div.innerHTML = labels.join('<br>');
-        return div;
-      }; */
+    legend.addTo(map);
 
-      legend.onAdd = function (map) {
+    var baseLayers = {
+      "Grayscale": grayscale,
+      "Streets": streets
+    }
 
-        var div = L.DomUtil.create('div', 'info legend'),
-          labels = []
+    var overlays = {
+      "Parks": parks,
+      "Bikeways": bikeways,
+      "Water Fountains": fountains
+    }
 
-        labels.push(
-          '<i style="background:' + no_washroom_park_color + '""></i> ' + 'no washrooom');
-        labels.push(
-          '<i style="background:' + has_washroom_park_color + '""></i> ' + 'has washrooom');
-        
-        
+    var layers = L.control.layers(baseLayers, overlays, { position: 'bottomleft' })
+    layers.addTo(map);
 
-        div.innerHTML = labels.join('<br>');
-        return div;
-      };
+    var info = L.control();
 
-      legend.addTo(map);
+    info.onAdd = function (map) {
+      this._div = L.DomUtil.create('div', 'info');
+      this.update();
+      return this._div;
+    };
 
-      var baseLayers = {
-        "Grayscale": grayscale,
-        "Streets": streets
-      }
+    /* info.update = function (props) {
+      this._div.innerHTML = '<h4>Feature Info </h4>' +  (props ?
+        '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
+        : 'Hover over a park');
+    }; */
 
-      var overlays = {
-        "Parks": parks,
-        "Bikeways": bikeways,
-        "Water Fountains": fountains
-      } 
-
-      var layers = L.control.layers(baseLayers, overlays, {position: 'bottomleft'})
-      layers.addTo(map);
-
-      var info = L.control();
-      
-      info.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'info');
-        this.update();
-        return this._div;
-      };
-
-      /* info.update = function (props) {
-        this._div.innerHTML = '<h4>Feature Info </h4>' +  (props ?
-          '<b>' + props.park_name + '</b><br />' + 'area: '+ props.area_ha
-          : 'Hover over a park');
-      }; */
-
-      info.update = function (props) {
-        if (props) {
-          if (props.park_name) {
-          this._div.innerHTML = '<h4>Feature Info</h4>' + 
-          '<b>' + props.park_name + '</b><br />' + 'Area: '+ props.area_ha.toFixed(0) + ' hectares'
-          } else if (props.bikeway_type) {
-            this._div.innerHTML = '<h4>Feature Info</h4>' + 
-            '<b>' + props.bike_route_name + '</b><br />' + 'Bikeway Type: '+ props.bikeway_type
-          } else if (props.name) {
-            this._div.innerHTML = '<h4>Feature Info</h4>' + props.name + '<br/>' +
+    info.update = function (props) {
+      if (props) {
+        if (props.park_name) {
+          this._div.innerHTML = '<h4>Feature Info</h4>' +
+            '<b>' + props.park_name + '</b><br />' + 'Area: ' + props.area_ha.toFixed(0) + ' hectares'
+        } else if (props.bikeway_type) {
+          this._div.innerHTML = '<h4>Feature Info</h4>' +
+            '<b>' + props.bike_route_name + '</b><br />' + 'Bikeway Type: ' + props.bikeway_type
+        } else if (props.name) {
+          this._div.innerHTML = '<h4>Feature Info</h4>' + props.name + '<br/>' +
             'In operation: ' + props.in_operation
-
-          }
-        } else {
-          this._div.innerHTML = '<h4>Feature Info </h4>' + 'Hover over a feature';
         }
-      };
+      } else {
+        this._div.innerHTML = '<h4>Feature Info </h4>' + 'Hover over a feature';
+      }
+    };
 
-      info.addTo(map);
-  
-    </script>
-  </body>
+    info.addTo(map);
+
+  </script>
+
+  <canvas id="myChart"></canvas>
+  <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    let data = [],
+        labels = [];
+
+    for (i = 0; i < parks_percent_neighborhood.parks_area_percent.length; i++) {
+      data[i] = parks_percent_neighborhood.parks_area_percent[i].SUM_parks_point_park_area_precent
+      labels[i] = parks_percent_neighborhood.parks_area_percent[i].parks_point_neighbourh
+    }
+
+    // Create a linear gradient
+    // The start gradient point is at x=20, y=0
+    // The end gradient point is at x=220, y=0
+    var gradient = ctx.createLinearGradient(0,500, 0,0);
+
+    // Add three color stops
+    gradient.addColorStop(0, 'lightpink');
+    gradient.addColorStop(.3, 'hotpink');
+    gradient.addColorStop(.6, 'magenta');
+    gradient.addColorStop(1, 'purple')
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Percentage Area of Parks Per Neighborhood',
+          data: data,
+          backgroundColor: gradient,
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+</body>
+
 </html>
