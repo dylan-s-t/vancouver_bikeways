@@ -7,6 +7,14 @@ html, body {
   height: 100%;
   margin: 0;
 }
+
+#van-title {
+  text-align: center;
+  background-color: grey;
+  color: yellow;
+  padding: 30px 0;
+}
+
 #map {
   /* width: 900px; */
   height: 500px;
@@ -41,7 +49,12 @@ html, body {
   opacity: 0.7; 
 }
 
-#myChart {
+#myChart, #myChart_bikeways {
   height: 500px; 
-  /* width: 900px; */
+  max-width: 900px; 
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
 }
