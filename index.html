@@ -102,7 +102,7 @@
       return {
         weight: 1,
         opacity: 1,
-        color: 'white',
+        color: null,
         //dashArray: '3',
         fillOpacity: 0.7,
         fillColor: getColor_park(feature.properties.parks_washrooms_table_OBJECTID)
@@ -212,35 +212,20 @@
 
     var legend = L.control({ position: 'bottomright' });
 
-    /*       legend.onAdd = function (map) {
-    
-            var div = L.DomUtil.create('div', 'info legend'),
-              grades = [0, 2, 5, 10, 20, 35, 50, 100],
-              labels = [],
-              from, to;
-    
-            for (var i = 0; i < grades.length; i++) {
-              from = grades[i];
-              to = grades[i + 1];
-    
-              labels.push(
-                '<i style="background:' + getColor_park(from + 1) + '"></i> ' +
-                from + (to ? '&ndash;' + to : '+'));
-            }
-    
-            div.innerHTML = labels.join('<br>');
-            return div;
-          }; */
-
     legend.onAdd = function (map) {
 
       var div = L.DomUtil.create('div', 'info legend'),
         labels = []
 
       labels.push(
-        '<i style="background:' + no_washroom_park_color + '""></i> ' + 'no washrooom');
+        '<i style="background:' + has_washroom_park_color + '""></i> ' + 'park with washroom');
       labels.push(
-        '<i style="background:' + has_washroom_park_color + '""></i> ' + 'has washrooom');
+        '<i style="background:' + no_washroom_park_color + '""></i> ' + 'park with no washroom');
+      
+      labels.push(
+        '<br><i style="background: blue"></i> ' + 'year-round operation fountain');
+      labels.push(
+        '<i style="background: lightblue"></i> ' + 'seasonal operation fountain');
 
       div.innerHTML = labels.join('<br>');
       return div;
@@ -350,16 +335,21 @@
         }]
       },
       options: {
+        title: {
+          display: true,
+          text: 'Percentage Area of Parks Per Neighborhood',
+          fontSize: 16
+        },
         scales: {
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "Percent Park (%)"
+            },
             ticks: {
               beginAtZero: true
             }
           }]
-        },
-        title: {
-          display: true,
-          text: 'Percentage Area of Parks Per Neighborhood'
         },
         legend: {
           display: false
@@ -419,16 +409,21 @@
         }]
       },
       options: {
+        title: {
+          display: true,
+          text: 'Length of Bikeways Per Neighborhood',
+          fontSize: 16
+        },
         scales: {
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "Length of Bikeways (m)"
+            },
             ticks: {
               beginAtZero: true
             }
           }]
-        },
-        title: {
-          display: true,
-          text: 'Length of Bikeways Per Neighborhood'
         },
         legend: {
           display: false
